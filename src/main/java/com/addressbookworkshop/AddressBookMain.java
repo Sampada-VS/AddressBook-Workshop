@@ -115,28 +115,35 @@ public class AddressBookMain {
 		System.out.println("Enter Person details to add in addressbook ==");
 		System.out.println("Enter First name : ");
 		String firstName = consoleInputReader.next();
-
-		System.out.println("Enter Last name : ");
-		String lastName = consoleInputReader.next();
-
-		System.out.println("Enter Address : ");
-		String address = consoleInputReader.next();
-
-		System.out.println("Enter City : ");
-		String city = consoleInputReader.next();
-
-		System.out.println("Enter State : ");
-		String state = consoleInputReader.next();
-
-		System.out.println("Enter Zip : ");
-		String zip = consoleInputReader.next();
-
-		System.out.println("Enter Phone number : ");
-		String phone = consoleInputReader.next();
-
-		System.out.println("Enter Email Id : ");
-		String email = consoleInputReader.next();
-		addressBookList.add(new AddressBookData(firstName, lastName, address, city, state, zip, phone, email));
+		AddressBookData found = addressBookList.stream()
+				.filter((p) -> firstName.equalsIgnoreCase(p.getName()))
+				.findAny().orElse(null);
+		if (found != null)
+			System.out.println("Can't add person entry because it already exists.");
+		
+		else {
+			System.out.println("Enter Last name : ");
+			String lastName = consoleInputReader.next();
+	
+			System.out.println("Enter Address : ");
+			String address = consoleInputReader.next();
+	
+			System.out.println("Enter City : ");
+			String city = consoleInputReader.next();
+	
+			System.out.println("Enter State : ");
+			String state = consoleInputReader.next();
+	
+			System.out.println("Enter Zip : ");
+			String zip = consoleInputReader.next();
+	
+			System.out.println("Enter Phone number : ");
+			String phone = consoleInputReader.next();
+	
+			System.out.println("Enter Email Id : ");
+			String email = consoleInputReader.next();
+			addressBookList.add(new AddressBookData(firstName, lastName, address, city, state, zip, phone, email));
+		}
 		return addressBookList;
 	}
 }

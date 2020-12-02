@@ -24,7 +24,7 @@ public class AddressBookMain {
 		List<AddressBookData> addressBookList = new ArrayList<>();
 		AddressBookMain addressBookMain = new AddressBookMain(addressBookList);
 		Scanner consoleInputReader = new Scanner(System.in);
-		System.out.println("Enter 1.Add 2.Display 3.Edit 4.Delete 5.Add Multiple addressbook 6:Exit : ");
+		System.out.println("Enter 1.Add 2.Display 3.Edit 4.Delete 5.Add Multiple Contacts 6.Add Multiple addressbook 7:Exit : ");
 		int choice=consoleInputReader.nextInt();
 		do {
 			switch(choice) {
@@ -36,12 +36,24 @@ public class AddressBookMain {
 					break;
 				case 4:	addressBookMain.deleteAddressBookData(consoleInputReader);
 						break;
-				case 5:	addressBookMain.createNewAddressBook(consoleInputReader);
+				case 5:	addressBookMain.addMultipleAddressBookData(consoleInputReader);
 						break;
-				case 6:	System.out.println("You exit.");
+				case 6:	addressBookMain.createNewAddressBook(consoleInputReader);
+						break;
+				case 7:	System.out.println("You exit.");
+						break;
 				default:	System.out.println("Wrong input .");
 			}
 		}while(choice !=4);
+	}
+
+	private void addMultipleAddressBookData(Scanner consoleInputReader) {
+		System.out.println("How many contacts do you want to add :");
+		int num=consoleInputReader.nextInt();
+		while(num >0) {
+			readAddressBookData(consoleInputReader);
+			num--;
+		}		
 	}
 
 	private void createNewAddressBook(Scanner consoleInputReader) {

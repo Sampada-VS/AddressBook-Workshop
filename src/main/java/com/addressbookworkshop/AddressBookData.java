@@ -21,4 +21,9 @@ public class AddressBookData {
 		this.phone = phone;
 		this.email = email;
 	}
+	
+	public String toString() {
+		return "\nFirst Name :" + firstName + ", Last Name : " + lastName + "\nAddress : " + address+ ", City : " + city+ "\nState : " + state
+				+ ", Zip Code : " + zip+ "\nPhone Number : " + phone+ "\nEmail Id : " + email;
+	}
 }

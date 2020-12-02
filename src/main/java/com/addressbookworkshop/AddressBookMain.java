@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import com.addressbook.Person;
-
 public class AddressBookMain {
 	public enum IOService {
 		CONSOLE_IO
 	}
 
-	List<AddressBookData> addressBookList;
-	AddressBookData addressBookData=new AddressBookData(null, null, null, null, null, null, null, null);
+	List<AddressBookData> addressBookList= new ArrayList<AddressBookData>();;
 
 	public AddressBookMain(List<AddressBookData> addressBookList) {
 		this.addressBookList = addressBookList;
@@ -24,7 +21,7 @@ public class AddressBookMain {
 		List<AddressBookData> addressBookList = new ArrayList<>();
 		AddressBookMain addressBookMain = new AddressBookMain(addressBookList);
 		Scanner consoleInputReader = new Scanner(System.in);
-		System.out.println("Enter 1.Add 2.Display 3.Edit 4.Exit : ");
+		System.out.println("Enter 1.Add 2.Display 3.Edit 4.Delete 5.Exit : ");
 		int choice=consoleInputReader.nextInt();
 		do {
 			switch(choice) {
@@ -34,10 +31,22 @@ public class AddressBookMain {
 					break;
 				case 3:	addressBookMain.editAddressBookData(consoleInputReader);
 					break;
-				case 4:	System.out.println("You exit.");
+				case 4:	addressBookMain.deleteAddressBookData(consoleInputReader);
+				case 5:	System.out.println("You exit.");
 				default:	System.out.println("Wrong input .");
 			}
 		}while(choice !=4);
+	}
+
+	private void deleteAddressBookData(Scanner consoleInputReader) {
+		System.out.println("Enter person first name to delete :");
+		String name=consoleInputReader.next();
+		for (int i = 0; i < addressBookList.size(); i++) {
+			AddressBookData p = (AddressBookData) addressBookList.get(i);
+			if (name.equalsIgnoreCase(p.getName()))
+				addressBookList.remove(i);
+		}
+		System.out.println(addressBookList);	
 	}
 
 	private void editAddressBookData(Scanner consoleInputReader) {

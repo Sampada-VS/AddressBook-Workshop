@@ -26,4 +26,10 @@ public class AddressBookData {
 		return "\nFirst Name :" + firstName + ", Last Name : " + lastName + "\nAddress : " + address+ ", City : " + city+ "\nState : " + state
 				+ ", Zip Code : " + zip+ "\nPhone Number : " + phone+ "\nEmail Id : " + email;
 	}
+
+	public String getName() {
+		return firstName;
+
+	}
+
 }

@@ -1,7 +1,9 @@
 package com.addressbookworkshop;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBookMain {
@@ -9,7 +11,8 @@ public class AddressBookMain {
 		CONSOLE_IO
 	}
 
-	List<AddressBookData> addressBookList= new ArrayList<AddressBookData>();;
+	List<AddressBookData> addressBookList= new ArrayList<AddressBookData>();
+	Map<String,List<AddressBookData>>addressBookName=new HashMap<String,List<AddressBookData>>();
 
 	public AddressBookMain(List<AddressBookData> addressBookList) {
 		this.addressBookList = addressBookList;
@@ -21,7 +24,7 @@ public class AddressBookMain {
 		List<AddressBookData> addressBookList = new ArrayList<>();
 		AddressBookMain addressBookMain = new AddressBookMain(addressBookList);
 		Scanner consoleInputReader = new Scanner(System.in);
-		System.out.println("Enter 1.Add 2.Display 3.Edit 4.Delete 5.Exit : ");
+		System.out.println("Enter 1.Add 2.Display 3.Edit 4.Delete 5.Add Multiple addressbook 6:Exit : ");
 		int choice=consoleInputReader.nextInt();
 		do {
 			switch(choice) {
@@ -32,10 +35,20 @@ public class AddressBookMain {
 				case 3:	addressBookMain.editAddressBookData(consoleInputReader);
 					break;
 				case 4:	addressBookMain.deleteAddressBookData(consoleInputReader);
-				case 5:	System.out.println("You exit.");
+						break;
+				case 5:	addressBookMain.createNewAddressBook(consoleInputReader);
+						break;
+				case 6:	System.out.println("You exit.");
 				default:	System.out.println("Wrong input .");
 			}
 		}while(choice !=4);
+	}
+
+	private void createNewAddressBook(Scanner consoleInputReader) {
+		System.out.println("Enter name of addressbook :");
+		String addressbookName=consoleInputReader.next();
+		List<AddressBookData> p=readAddressBookData(consoleInputReader);
+		addressBookName.put(addressbookName,p);
 	}
 
 	private void deleteAddressBookData(Scanner consoleInputReader) {
@@ -86,7 +99,7 @@ public class AddressBookMain {
 			System.out.println("Writing Person details to console \n" + addressBookList);
 	}
 
-	private void readAddressBookData(Scanner consoleInputReader) {
+	private List<AddressBookData> readAddressBookData(Scanner consoleInputReader) {
 		System.out.println("Enter Person details to add in addressbook ==");
 		System.out.println("Enter First name : ");
 		String firstName = consoleInputReader.next();
@@ -112,5 +125,6 @@ public class AddressBookMain {
 		System.out.println("Enter Email Id : ");
 		String email = consoleInputReader.next();
 		addressBookList.add(new AddressBookData(firstName, lastName, address, city, state, zip, phone, email));
+		return addressBookList;
 	}
 }

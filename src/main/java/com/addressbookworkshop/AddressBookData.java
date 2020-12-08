@@ -23,8 +23,8 @@ public class AddressBookData {
 	}
 	
 	public String toString() {
-		return "\nFirst Name :" + firstName + ", Last Name : " + lastName + "\nAddress : " + address+ ", City : " + city+ "\nState : " + state
-				+ ", Zip Code : " + zip+ "\nPhone Number : " + phone+ "\nEmail Id : " + email;
+		return "First Name :" + firstName + ", Last Name : " + lastName + ", Address : " + address+ ", City : " + city+ ", State : " + state
+				+ ", Zip Code : " + zip+ ", Phone Number : " + phone+ ", Email Id : " + email;
 	}
 
 	public String getName() {

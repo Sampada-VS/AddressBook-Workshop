@@ -28,8 +28,13 @@ public class AddressBookData {
 	}
 
 	public String getName() {
-		return firstName;
-
+		return firstName+" "+lastName;
+	}
+	public String getCity() {
+		return city;
+	}
+	public String getState() {
+		return state;
 	}
 
 }

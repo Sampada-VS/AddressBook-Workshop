@@ -1,6 +1,7 @@
 package com.addressbookworkshop;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -27,7 +28,7 @@ public class AddressBookMain {
 		int choice;
 		do {
 			System.out.println("Enter 1.Add addressbook 2.Display 3.Edit 4.Delete 5.Search By City"
-					+ " 6.Search By State 7.Count person by city 8.Count person by state 9.Exit : ");
+					+ " 6.Search By State 7.Count person by city 8.Count person by state 9.Sort By Name 10.Exit : ");
 			choice = consoleInputReader.nextInt();
 			switch (choice) {
 			case 1:
@@ -55,12 +56,25 @@ public class AddressBookMain {
 				countByState(consoleInputReader);
 				break;
 			case 9:
+				sortEntriesByName(consoleInputReader);
+				break;
+			case 10:
 				System.out.println("You exit.");
 				break;
 			default:
 				System.out.println("Wrong input .");
 			}
-		} while (choice != 9);
+		} while (choice != 10);
+}
+	private static void sortEntriesByName(Scanner consoleInputReader) {
+		for (Entry<String, List<AddressBookData>> contactList : addressBookName.entrySet()) {
+			String bookName = contactList.getKey();
+			List<AddressBookData> data = contactList.getValue();
+			System.out.println(bookName+" addressbook sorted by name == ");
+			data = data.stream().sorted(Comparator.comparing(AddressBookData::getFirstName))
+					.collect(Collectors.toList());
+			data.forEach(System.out::println);
+		}
 	}
 
 	private static void countByState(Scanner consoleInputReader) {

@@ -30,6 +30,9 @@ public class AddressBookData {
 	public String getName() {
 		return firstName+" "+lastName;
 	}
+	public String getFirstName() {
+		return firstName;
+	}
 	public String getCity() {
 		return city;
 	}

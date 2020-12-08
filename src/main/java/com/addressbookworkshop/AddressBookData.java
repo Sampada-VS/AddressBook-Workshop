@@ -39,5 +39,8 @@ public class AddressBookData {
 	public String getState() {
 		return state;
 	}
+	public String getZip() {
+		return zip;
+	}
 
 }

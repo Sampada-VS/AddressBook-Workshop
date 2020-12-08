@@ -28,7 +28,8 @@ public class AddressBookMain {
 		int choice;
 		do {
 			System.out.println("Enter 1.Add addressbook 2.Display 3.Edit 4.Delete 5.Search By City"
-					+ " 6.Search By State 7.Count person by city 8.Count person by state 9.Sort By Name 10.Exit : ");
+					+ " 6.Search By State 7.Count person by city 8.Count person by state 9.Sort By Name 10.Sort by City 11.Sort by state"
+					+ " 12.Sort by Zip 13.Exit : ");
 			choice = consoleInputReader.nextInt();
 			switch (choice) {
 			case 1:
@@ -59,13 +60,52 @@ public class AddressBookMain {
 				sortEntriesByName(consoleInputReader);
 				break;
 			case 10:
+				sortEntriesByCity(consoleInputReader);
+				break;
+			case 11:
+				sortEntriesByState(consoleInputReader);
+				break;
+			case 12:
+				sortEntriesByZip(consoleInputReader);
+				break;
+			case 13:
 				System.out.println("You exit.");
 				break;
 			default:
 				System.out.println("Wrong input .");
 			}
-		} while (choice != 10);
+		} while (choice != 13);
 }
+	private static void sortEntriesByZip(Scanner consoleInputReader) {
+		for (Entry<String, List<AddressBookData>> contactList : addressBookName.entrySet()) {
+			String bookName = contactList.getKey();
+			List<AddressBookData> data = contactList.getValue();
+			System.out.println(bookName+" addressbook sorted by zip code == ");
+			data = data.stream().sorted(Comparator.comparing(AddressBookData::getZip))
+					.collect(Collectors.toList());
+			data.forEach(System.out::println);
+		}		
+	}
+	private static void sortEntriesByState(Scanner consoleInputReader) {
+		for (Entry<String, List<AddressBookData>> contactList : addressBookName.entrySet()) {
+			String bookName = contactList.getKey();
+			List<AddressBookData> data = contactList.getValue();
+			System.out.println(bookName+" addressbook sorted by state == ");
+			data = data.stream().sorted(Comparator.comparing(AddressBookData::getState))
+					.collect(Collectors.toList());
+			data.forEach(System.out::println);
+		}
+	}
+	private static void sortEntriesByCity(Scanner consoleInputReader) {
+		for (Entry<String, List<AddressBookData>> contactList : addressBookName.entrySet()) {
+			String bookName = contactList.getKey();
+			List<AddressBookData> data = contactList.getValue();
+			System.out.println(bookName+" addressbook sorted by city == ");
+			data = data.stream().sorted(Comparator.comparing(AddressBookData::getCity))
+					.collect(Collectors.toList());
+			data.forEach(System.out::println);
+		}	
+	}
 	private static void sortEntriesByName(Scanner consoleInputReader) {
 		for (Entry<String, List<AddressBookData>> contactList : addressBookName.entrySet()) {
 			String bookName = contactList.getKey();

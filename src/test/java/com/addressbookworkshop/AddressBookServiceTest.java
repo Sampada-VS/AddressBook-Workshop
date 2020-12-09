@@ -2,17 +2,18 @@ package com.addressbookworkshop;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import static com.addressbookworkshop.AddressBookService.IOService;
 
 public class AddressBookServiceTest {
 	static AddressBookService addressBookService;
+	List<AddressBookData> addressBookData;
 
 	@BeforeClass
 	public static void createObj() {
@@ -43,4 +44,10 @@ public class AddressBookServiceTest {
 		assertEquals(2, entries);
 	}
 
+	@Test
+	public void givenAddressbookInDB_WhenRetrieved_ShouldMatchTotalPersonCount() {
+		addressBookData = addressBookService.readAddressBookDataFromDB(IOService.DB_IO);
+		assertEquals(4, addressBookData.size());
+		System.out.println("Total person in addressbook :" + addressBookData.size());
+	}
 }

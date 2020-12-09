@@ -9,11 +9,14 @@ public class AddressBookService {
 
 	private List<AddressBookData> addressBookList;
 	private int lines;
+	private AddressBookDBService addressBookDBService;
 
 	public AddressBookService() {
+		addressBookDBService = AddressBookDBService.getInstance();
 	}
 
 	public AddressBookService(List<AddressBookData> addressBookList) {
+		this();
 		this.addressBookList = addressBookList;
 	}
 
@@ -36,5 +39,10 @@ public class AddressBookService {
 	public int readAddressBookData(IOService ioService) {
 		this.lines = new AddressBookFileIOService().readData();
 		return lines;
+	}
+
+	public List<AddressBookData> readAddressBookDataFromDB(IOService ioService) {
+		this.addressBookList = addressBookDBService.readData();
+		return this.addressBookList;
 	}
 }

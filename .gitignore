@@ -13,3 +13,4 @@ settings.gradle
 *.txt
 *.csv
 *.json
+DB.properties

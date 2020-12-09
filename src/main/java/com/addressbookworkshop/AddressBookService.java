@@ -1,5 +1,6 @@
 package com.addressbookworkshop;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class AddressBookService {
@@ -66,5 +67,11 @@ public class AddressBookService {
 	public boolean checkAddressBookSyncWithDB(String firstName) {
 		List<AddressBookData> addressBookDataList = addressBookDBService.getAddressBookDetails(firstName);
 		return addressBookDataList.get(0).equals(getAddressBookData(firstName));
+	}
+
+	public List<AddressBookData> readAddressBookForDateRange(IOService ioService, LocalDate dateAdded, LocalDate dateNow) {
+		if (ioService.equals(IOService.DB_IO))
+			return addressBookDBService.getAddressBookForDateRange(dateAdded, dateNow);
+		return null;
 	}
 }

@@ -3,6 +3,7 @@ package com.addressbookworkshop;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -58,5 +59,14 @@ public class AddressBookServiceTest {
 		boolean result = addressBookService.checkAddressBookSyncWithDB("Terrisa");
 		assertTrue(result);
 		System.out.println("Contact number got updated for Terrisa.");
+	}
+	
+	@Test
+	public void givenDateRange_WhenRetrieved_ShouldMatchPersonCount() {
+		LocalDate dateAdded = LocalDate.of(2018, 01, 01);
+		LocalDate dateNow = LocalDate.now();
+		addressBookData = addressBookService.readAddressBookForDateRange(IOService.DB_IO, dateAdded,dateNow);
+		assertEquals(3, addressBookData.size());
+		System.out.println("Person count match for given date range.");
 	}
 }

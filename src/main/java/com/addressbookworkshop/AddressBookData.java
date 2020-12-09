@@ -1,5 +1,7 @@
 package com.addressbookworkshop;
 
+import java.time.LocalDate;
+
 public class AddressBookData {
 	public int id;
 	public String firstName;
@@ -10,6 +12,7 @@ public class AddressBookData {
 	public String zip;
 	public String phone;
 	public String email;
+	public LocalDate dateAdded;
 
 	public AddressBookData(String firstName, String lastName, String address, String city, String state,
 						   String zip, String phone, String email) {
@@ -27,6 +30,12 @@ public class AddressBookData {
 			String zip, String phone, String email) {
 		this(firstName,lastName,address,city,state,zip,phone,email);
 		this.id=id;
+	}
+	
+	public AddressBookData(int id, String firstName, String lastName, String address, String city, String state,
+			String zip, String phone, String email,LocalDate dateAdded) {
+		this(id,firstName,lastName,address,city,state,zip,phone,email);
+		this.dateAdded=dateAdded;
 	}
 
 	public String toString() {

@@ -130,4 +130,9 @@ public class AddressBookService {
 		if (addressBookData != null)
 			addressBookData.phone = phone;
 	}
+
+	public void deleteAddressBookEntry(String firstName, IOService ioService) {
+		AddressBookData addressBookData = this.getAddressBookData(firstName);
+		addressBookList.remove(addressBookData);
+	}
 }

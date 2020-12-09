@@ -187,4 +187,20 @@ public class AddressBookServiceTest {
 		int statusCode = response.getStatusCode();
 		assertEquals(200, statusCode);
 	}
+	
+	@Test
+	public void givenContact_WhenDeleted_ShouldMatch200ResponseAndCount() {
+		AddressBookData[] arrayOfContacts = getAddressBookList();
+		addressBookService = new AddressBookService(Arrays.asList(arrayOfContacts));
+		AddressBookData addressBookData = addressBookService.getAddressBookData("Terrisa");
+		RequestSpecification request = RestAssured.given();
+		request.header("Content-Type", "application/json");
+		Response response = request.delete("/addressbook/" + addressBookData.id);
+		int statusCode = response.getStatusCode();
+		assertEquals(200, statusCode);
+
+		addressBookService.deleteAddressBookEntry(addressBookData.firstName, IOService.REST_IO);
+		long entries = addressBookService.countEntries(IOService.REST_IO);
+		assertEquals(4, entries);
+	}
 }

@@ -136,7 +136,7 @@ public class AddressBookServiceTest {
 	public void givenAddressBookDataInJsonServer_WhenRetrieved_ShouldMatchPersonCount() {
 		AddressBookData[] arrayOfPerson = getAddressBookList();
 		addressBookService = new AddressBookService(Arrays.asList(arrayOfPerson));
-		long entries = addressBookService.countEntries(IOService.DB_IO);
+		long entries = addressBookService.countEntries(IOService.REST_IO);
 		assertEquals(2, entries);
 	}
 }

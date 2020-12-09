@@ -63,7 +63,7 @@ public class AddressBookService {
 			addressBookData.phone = phone;	
 	}
 
-	private AddressBookData getAddressBookData(String firstName) {
+	public AddressBookData getAddressBookData(String firstName) {
 		AddressBookData addressBookData;
 		addressBookData = this.addressBookList.stream().filter(dataItem -> dataItem.firstName.equals(firstName))
 				.findFirst().orElse(null);
@@ -123,5 +123,11 @@ public class AddressBookService {
 	public void addContactToAddressBook(AddressBookData addressBookData, IOService ioService) {
 		if (ioService.equals(IOService.REST_IO))	
 			addressBookList.add(addressBookData);
+	}
+
+	public void updatePersonContactNo(String firstName, String phone, IOService ioService) {
+		AddressBookData addressBookData = this.getAddressBookData(firstName);
+		if (addressBookData != null)
+			addressBookData.phone = phone;
 	}
 }

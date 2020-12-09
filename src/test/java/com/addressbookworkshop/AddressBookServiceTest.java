@@ -171,4 +171,20 @@ public class AddressBookServiceTest {
 		long entries = addressBookService.countEntries(IOService.REST_IO);
 		assertEquals(5, entries);
 	}
+	
+	@Test
+	public void givenPhoneNumber_WhenUpdated_ShouldMatch200Response() {
+		AddressBookData[] arrayOfContacts = getAddressBookList();
+		addressBookService = new AddressBookService(Arrays.asList(arrayOfContacts));
+		addressBookService.updatePersonContactNo("Bill", "8876543211", IOService.REST_IO);
+		AddressBookData addressBookData = addressBookService.getAddressBookData("Bill");
+
+		String addressBookJson = new Gson().toJson(addressBookData);
+		RequestSpecification request = RestAssured.given();
+		request.header("Content-Type", "application/json");
+		request.body(addressBookJson);
+		Response response = request.put("/addressbook/" + addressBookData.id);
+		int statusCode = response.getStatusCode();
+		assertEquals(200, statusCode);
+	}
 }

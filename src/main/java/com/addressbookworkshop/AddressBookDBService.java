@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-
 public class AddressBookDBService {
 	private static AddressBookDBService addressBookDBService;
 	private PreparedStatement addressBookDataStatement;
@@ -142,6 +141,29 @@ public class AddressBookDBService {
 	public List<AddressBookData> getAddressBookForGivenState(String state) {
 		String sql = String.format("SELECT * FROM addressbook WHERE State='%s'", state);
 		return this.getAddressBookDataUsingDB(sql);
+	}
+
+	public AddressBookData addPersonToAddressBookDB(String firstName, String lastName, String address, String city,
+			String state, String zip, String phone, String email, LocalDate dateAdded) {
+		int personId = -1;
+		AddressBookData addressBookData = null;
+		String sql = String.format(
+				"INSERT INTO addressbook (FirstName,LastName,Address,City,State,Zip,PhoneNumber,Email,date_added) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s')",
+				firstName, lastName, address, city, state, zip, phone, email, dateAdded);
+		try (Connection connection = getConnect()) {
+			Statement statement = connection.createStatement();
+			int rowAffected = statement.executeUpdate(sql, statement.RETURN_GENERATED_KEYS);
+			if (rowAffected == 1) {
+				ResultSet resultSet = statement.getGeneratedKeys();
+				if (resultSet.next())
+					personId = resultSet.getInt(1);
+			}
+			addressBookData = new AddressBookData(personId, firstName, lastName, address, city, state, zip, phone,
+					email, dateAdded);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return addressBookData;
 	}
 
 }

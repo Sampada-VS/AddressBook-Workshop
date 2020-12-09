@@ -86,4 +86,10 @@ public class AddressBookService {
 			return addressBookDBService.getAddressBookForGivenState(state);
 		return null;
 	}
+
+	public void addPersonToAddressBook(String firstName, String lastName, String address, String city, String state,
+			String zip, String phone, String email, LocalDate dateAdded) {
+		addressBookList.add(addressBookDBService.addPersonToAddressBookDB(firstName, lastName, address, city, state,
+				zip, phone, email, dateAdded));
+	}
 }

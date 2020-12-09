@@ -85,4 +85,13 @@ public class AddressBookServiceTest {
 		assertEquals(3, addressBookData.size());
 		System.out.println("Person count match for given state.");
 	}
+	
+	@Test
+	public void givenNewPerson_WhenAdded_ShouldSyncWithDB() {
+		addressBookService.addPersonToAddressBook("Gunjan", "T", "K", "Kerala", "Kerala", "498792", "9876543213",
+				"gt@gm.com", LocalDate.now());
+		boolean result = addressBookService.checkAddressBookSyncWithDB("Gunjan");
+		assertTrue(result);
+		System.out.println("Person added in addressbook .");
+	}
 }

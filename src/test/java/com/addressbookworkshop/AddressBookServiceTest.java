@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 import static com.addressbookworkshop.AddressBookService.IOService;
 
@@ -41,6 +42,14 @@ public class AddressBookServiceTest {
 		RestAssured.port = 3000;
 	}
 
+	private Response addContactToJsonServer(AddressBookData addressBookData) {
+		String contactJson = new Gson().toJson(addressBookData);
+		RequestSpecification request = RestAssured.given();
+		request.header("Content-Type", "application/json");
+		request.body(contactJson);
+		return request.post("/addressbook");
+	}
+	
 	private AddressBookData[] getAddressBookList() {
 		Response response = RestAssured.get("/addressbook");
 		System.out.println("Adddressbook entries in JsonServer :\n" + response.asString());
@@ -138,5 +147,28 @@ public class AddressBookServiceTest {
 		addressBookService = new AddressBookService(Arrays.asList(arrayOfPerson));
 		long entries = addressBookService.countEntries(IOService.REST_IO);
 		assertEquals(2, entries);
+	}
+	
+	
+	@Test
+	public void givenMultiplePerson_WhenAdded_ShouldMatch201ResponseAndCount() {
+		AddressBookData[] arrayOfContacts = getAddressBookList();
+		addressBookService = new AddressBookService(Arrays.asList(arrayOfContacts));
+		AddressBookData[] arrayOfPerson = {
+				new AddressBookData(0, "Mark", "K", "Dadar", "Mumbai", "Maharashtra", "498892", "9876544213","mt@gm.com"),
+				new AddressBookData(0, "Terrisa", "T", "Karve", "Pune", "Maharashtra", "491792", "9877543213","tt@gm.com"),
+				new AddressBookData(0, "Charlie", "K", "S", "New Delhi", "Delhi", "493792", "9879543213","ck@gm.com") };
+
+		for (AddressBookData addressBookData : arrayOfPerson) {
+
+			Response response = addContactToJsonServer(addressBookData);
+			int statusCode = response.getStatusCode();
+			assertEquals(201, statusCode);
+
+			addressBookData = new Gson().fromJson(response.asString(), AddressBookData.class);
+			addressBookService.addContactToAddressBook(addressBookData, IOService.REST_IO);
+		}
+		long entries = addressBookService.countEntries(IOService.REST_IO);
+		assertEquals(5, entries);
 	}
 }

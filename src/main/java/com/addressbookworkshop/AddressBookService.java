@@ -119,4 +119,9 @@ public class AddressBookService {
 			}
 		}
 	}
+
+	public void addContactToAddressBook(AddressBookData addressBookData, IOService ioService) {
+		if (ioService.equals(IOService.REST_IO))	
+			addressBookList.add(addressBookData);
+	}
 }

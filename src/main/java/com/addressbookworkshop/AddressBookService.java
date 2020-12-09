@@ -74,4 +74,16 @@ public class AddressBookService {
 			return addressBookDBService.getAddressBookForDateRange(dateAdded, dateNow);
 		return null;
 	}
+
+	public List<AddressBookData> readAddressBookForCity(IOService ioService, String city) {
+		if (ioService.equals(IOService.DB_IO))
+			return addressBookDBService.getAddressBookForGivenCity(city);
+		return null;
+	}
+
+	public List<AddressBookData> readAddressBookForState(IOService ioService, String state) {
+		if (ioService.equals(IOService.DB_IO))
+			return addressBookDBService.getAddressBookForGivenState(state);
+		return null;
+	}
 }

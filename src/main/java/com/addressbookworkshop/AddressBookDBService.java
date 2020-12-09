@@ -134,4 +134,14 @@ public class AddressBookDBService {
 		return this.getAddressBookDataUsingDB(sql);
 	}
 
+	public List<AddressBookData> getAddressBookForGivenCity(String city) {
+		String sql = String.format("SELECT * FROM addressbook WHERE City='%s'", city);
+		return this.getAddressBookDataUsingDB(sql);
+	}
+
+	public List<AddressBookData> getAddressBookForGivenState(String state) {
+		String sql = String.format("SELECT * FROM addressbook WHERE State='%s'", state);
+		return this.getAddressBookDataUsingDB(sql);
+	}
+
 }

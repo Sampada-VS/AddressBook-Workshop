@@ -69,4 +69,20 @@ public class AddressBookServiceTest {
 		assertEquals(3, addressBookData.size());
 		System.out.println("Person count match for given date range.");
 	}
+	
+	@Test
+	public void givenCity_WhenContactsRetrieved_ShouldMatchPersonCount() {
+		String city = "Mumbai";
+		addressBookData = addressBookService.readAddressBookForCity(IOService.DB_IO, city);
+		assertEquals(2, addressBookData.size());
+		System.out.println("Person count match for given city.");
+	}
+
+	@Test
+	public void givenState_WhenContactsRetrieved_ShouldMatchPersonCount() {
+		String state = "Maharashtra";
+		addressBookData = addressBookService.readAddressBookForState(IOService.DB_IO, state);
+		assertEquals(3, addressBookData.size());
+		System.out.println("Person count match for given state.");
+	}
 }

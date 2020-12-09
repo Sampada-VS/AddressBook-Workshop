@@ -1,6 +1,7 @@
 package com.addressbookworkshop;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,11 +44,19 @@ public class AddressBookServiceTest {
 		int entries = addressBookService.readAddressBookData(IOService.FILE_IO);
 		assertEquals(2, entries);
 	}
-
+	
 	@Test
 	public void givenAddressbookInDB_WhenRetrieved_ShouldMatchTotalPersonCount() {
 		addressBookData = addressBookService.readAddressBookDataFromDB(IOService.DB_IO);
 		assertEquals(4, addressBookData.size());
 		System.out.println("Total person in addressbook :" + addressBookData.size());
+	}
+	
+	@Test
+	public void givenPhoneNumber_WhenUpdated_ShouldSyncWithDB() {
+		addressBookService.updateContactNumber("Terrisa", "9876543285");
+		boolean result = addressBookService.checkAddressBookSyncWithDB("Terrisa");
+		assertTrue(result);
+		System.out.println("Contact number got updated for Terrisa.");
 	}
 }

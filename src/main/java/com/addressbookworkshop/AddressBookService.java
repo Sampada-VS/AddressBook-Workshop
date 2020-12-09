@@ -8,7 +8,7 @@ public class AddressBookService {
 	}
 
 	private List<AddressBookData> addressBookList;
-	private List<String> lines;
+	private int lines;
 
 	public AddressBookService() {
 	}
@@ -35,6 +35,6 @@ public class AddressBookService {
 
 	public int readAddressBookData(IOService ioService) {
 		this.lines = new AddressBookFileIOService().readData();
-		return lines.size();
+		return lines;
 	}
 }

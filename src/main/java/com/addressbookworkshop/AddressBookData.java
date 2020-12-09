@@ -27,11 +27,14 @@ public class AddressBookData {
 				+ ", Zip Code : " + zip+ ", Phone Number : " + phone+ ", Email Id : " + email;
 	}
 
-	public String getName() {
-		return firstName+" "+lastName;
-	}
 	public String getFirstName() {
 		return firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public String getAddress() {
+		return address;
 	}
 	public String getCity() {
 		return city;
@@ -42,5 +45,13 @@ public class AddressBookData {
 	public String getZip() {
 		return zip;
 	}
-
+	public String getPhone() {
+		return phone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public String getName() {
+		return firstName+" "+lastName;
+	}
 }

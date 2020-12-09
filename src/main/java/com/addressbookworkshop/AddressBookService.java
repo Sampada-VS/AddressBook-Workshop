@@ -1,7 +1,9 @@
 package com.addressbookworkshop;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddressBookService {
 	public enum IOService {
@@ -34,6 +36,8 @@ public class AddressBookService {
 	public long countEntries(IOService ioService) {
 		if (ioService.equals(IOService.FILE_IO))
 			return new AddressBookFileIOService().countEntries();
+		if (ioService.equals(IOService.DB_IO))
+			return addressBookList.size();
 		return 0;
 	}
 
@@ -91,5 +95,26 @@ public class AddressBookService {
 			String zip, String phone, String email, LocalDate dateAdded) {
 		addressBookList.add(addressBookDBService.addPersonToAddressBookDB(firstName, lastName, address, city, state,
 				zip, phone, email, dateAdded));
+	}
+
+	public void addContactToAddressBookUsingThreads(List<AddressBookData> contactsList) {
+		Map<Integer, Boolean> contactAdditionStatus = new HashMap<Integer, Boolean>();
+		contactsList.forEach(personData -> {
+			Runnable task = () -> {
+				contactAdditionStatus.put(personData.hashCode(), false);
+				this.addPersonToAddressBook(personData.firstName, personData.lastName, personData.address,
+						personData.city, personData.state, personData.zip, personData.phone, personData.email,
+						personData.dateAdded);
+				contactAdditionStatus.put(personData.hashCode(), true);
+			};
+			Thread thread = new Thread(task, personData.firstName);
+			thread.start();
+		});
+		while (contactAdditionStatus.containsValue(false)) {
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+			}
+		}
 	}
 }

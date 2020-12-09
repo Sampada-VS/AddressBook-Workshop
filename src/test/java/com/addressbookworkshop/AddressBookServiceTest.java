@@ -3,6 +3,8 @@ package com.addressbookworkshop;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -93,5 +95,21 @@ public class AddressBookServiceTest {
 		boolean result = addressBookService.checkAddressBookSyncWithDB("Gunjan");
 		assertTrue(result);
 		System.out.println("Person added in addressbook .");
+	}
+	
+	@Test
+	public void givenFourContacts_WhenAdded_ShouldMatchContactEntries() {
+		AddressBookData[] arrayOfPersons = {
+				new AddressBookData(0, "Bill", "T", "CST", "Mumbai", "Maharashtra", "428792", "9876543213", "bt@gm.com",LocalDate.now()),
+				new AddressBookData(0, "Mark", "K", "Dadar", "Mumbai", "Maharashtra", "498892", "9876544213","mt@gm.com", LocalDate.now()),
+				new AddressBookData(0, "Terrisa", "T", "Karve", "Pune", "Maharashtra", "491792", "9877543213","tt@gm.com", LocalDate.now()),
+				new AddressBookData(0, "Charlie", "K", "S", "New Delhi", "Delhi", "493792", "9879543213", "ck@gm.com",LocalDate.now()) };
+		AddressBookService addressBookService = new AddressBookService();
+		addressBookService.readAddressBookDataFromDB(IOService.DB_IO);
+		Instant threadStart = Instant.now();
+		addressBookService.addContactToAddressBookUsingThreads(Arrays.asList(arrayOfPersons));
+		Instant threadEnd = Instant.now();
+		System.out.println("Duration with thread :" + Duration.between(threadStart, threadEnd));
+		assertEquals(5, addressBookService.countEntries(IOService.DB_IO));
 	}
 }

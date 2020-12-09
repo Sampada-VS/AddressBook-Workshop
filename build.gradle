@@ -30,4 +30,7 @@ dependencies {
 	compile group: 'com.opencsv', name: 'opencsv', version: '4.1'
 	
 	compile 'com.google.code.gson:gson:2.8.6'
+	
+	testCompile group: 'io.rest-assured',name:'rest-assured',version:'4.3.1' 
+	
 }

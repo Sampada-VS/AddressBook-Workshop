@@ -10,8 +10,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.google.gson.Gson;
+
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 
 import static com.addressbookworkshop.AddressBookService.IOService;
 
@@ -28,7 +34,20 @@ public class AddressBookServiceTest {
 	public static void nullObj() {
 		addressBookService = null;
 	}
+	
+	@Before
+	public void setup() {
+		RestAssured.baseURI = "http://localhost";
+		RestAssured.port = 3000;
+	}
 
+	private AddressBookData[] getAddressBookList() {
+		Response response = RestAssured.get("/addressbook");
+		System.out.println("Adddressbook entries in JsonServer :\n" + response.asString());
+		AddressBookData[] arrayOfPerson = new Gson().fromJson(response.asString(), AddressBookData[].class);
+		return arrayOfPerson;
+	}
+	
 	@Test
 	public void given2Contacts_WhenWrittenToFile_ShouldMatchTotalEntries() {
 		AddressBookData[] arrayOfPerson = {
@@ -111,5 +130,13 @@ public class AddressBookServiceTest {
 		Instant threadEnd = Instant.now();
 		System.out.println("Duration with thread :" + Duration.between(threadStart, threadEnd));
 		assertEquals(5, addressBookService.countEntries(IOService.DB_IO));
+	}
+	
+	@Test
+	public void givenAddressBookDataInJsonServer_WhenRetrieved_ShouldMatchPersonCount() {
+		AddressBookData[] arrayOfPerson = getAddressBookList();
+		addressBookService = new AddressBookService(Arrays.asList(arrayOfPerson));
+		long entries = addressBookService.countEntries(IOService.DB_IO);
+		assertEquals(2, entries);
 	}
 }

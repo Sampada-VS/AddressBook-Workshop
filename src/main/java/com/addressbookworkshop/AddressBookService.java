@@ -38,6 +38,8 @@ public class AddressBookService {
 			return new AddressBookFileIOService().countEntries();
 		if (ioService.equals(IOService.DB_IO))
 			return addressBookList.size();
+		if (ioService.equals(IOService.REST_IO))	
+			return addressBookList.size();
 		return 0;
 	}
 
